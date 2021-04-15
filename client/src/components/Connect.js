@@ -2,6 +2,11 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 // import md5 from "crypto-js/md5";
 
+
+const apiClient = axios.create({
+  baseURL: 'http://127.0.0.1:8001/api/',
+  withCredentials: true,
+});
 export default function Connect() {
   const [submit, setsubmit] = useState(false)
   
@@ -9,19 +14,20 @@ export default function Connect() {
     if (!sessionStorage.getItem('token')) {
       if (submit === true) {
         
-        // var USERNAME = document.getElementById('username').value
-        // var PASSWORD_TMP = document.getElementById('password').value
+        var email = document.getElementById('username').value
+        var password = document.getElementById('password').value
         
         // var PASSWORD = md5(PASSWORD_TMP).toString()
                 
-        axios.post(``)
+        apiClient.post(`login`,{email, password})
         .then(res => {
+          console.log(res.data);
           sessionStorage.setItem('token', res.data.token)
           window.location.href = "/"
         })
         .catch(error => {
-          console.log(error.response.data.errors[0].text)
-          alert(error.response.data.errors[0].text)
+          // console.log(error.response.data.errors[0].text)
+          // alert(error.response.data.errors[0].text)
           setsubmit(false)
         });
       }
