@@ -1,65 +1,71 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 // import md5 from "crypto-js/md5";
 
-
 const apiClient = axios.create({
-  baseURL: 'http://127.0.0.1:8001/api/',
+  baseURL: 'http://127.0.0.1:8000/api/',
   withCredentials: true,
-});
+  mode: 'no-cors',
+  headers: {
+    'Content-Type': 'application/json',
+    'cache-control': 'no-cache',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  },
+})
+
 export default function Connect() {
   const [submit, setsubmit] = useState(false)
+
   
-  useEffect(() => {
-    if (!sessionStorage.getItem('token')) {
-      if (submit === true) {
-        
-        var email = document.getElementById('username').value
-        var password = document.getElementById('password').value
-        
-        // var PASSWORD = md5(PASSWORD_TMP).toString()
-                
-        apiClient.post(`login`,{email, password})
-        .then(res => {
-          console.log(res.data);
-          sessionStorage.setItem('token', res.data.token)
-          window.location.href = "/"
-        })
-        .catch(error => {
-          // console.log(error.response.data.errors[0].text)
-          // alert(error.response.data.errors[0].text)
-          setsubmit(false)
-        });
-      }
-    }
-    else {
-      window.location.href = "/"
-    }
-    
-  }, [submit])
+  return (
+    <>
+      <div className="container">
+        <div className="row rounded border">
 
-  function handleSubmit(e) {
-    e.preventDefault()
-    setsubmit(true);
-  }
+          <div className="col-sm-6 bg-white ">
+            <div className="mt-5">
+              <button className=" btn btn-secondary ">  Go Back </button>
+              <span className=""> Have an account? <a className="pt-5" href=""> Sign In  </a></span>
+            </div>
 
-   return (
-<>
+            <h1>Sign Up to Medocil </h1>
+            <div className="form-group">
+              <br></br>
+              <label for="">FirstName</label>
+              <br></br>
+              <input type="text" className="form-control " name="" id="txt" aria-describedby="helpId" placeholder="Firstname" />
+            </div>
 
-       <form>
-       <h2> LOGIN</h2>
-        <div className="field-group">
-         
-          <label>Username</label>
-      <input type="text" name="username" id="username"></input>
+            <div className="form-group">
+              <label for="">LastName</label>
+              <br></br>
+              <input type="text" className="form-control" name="" id="txt" aria-describedby="helpId" placeholder="LastName" />
+            </div>
+
+            <div className="form-group">
+              <label for="">Email</label>
+              <br></br>
+              <input type="text" className="form-control" name="" id="txt" aria-describedby="helpId" placeholder="Email" />
+            </div>
+
+            <div className="form-group">
+              <label for="">Password</label>
+              <br></br>
+              <input type="password" className="form-control" name="" id="txt" placeholder="Password" />
+            </div>
+            <div>
+              <button type="button" className="btn btn-primary mb-5">Sign Up Now</button>
+            </div>
+
+
+          </div>
+          <div class="col-sm-6 bg-warning">
+
+          </div>
+        </div>
       </div>
-      <div className="field-group">
-          <label>Password</label>
-      <input type="password" name="password" id="password"></input>
-      </div>
-      <input type="submit" value='Se connecter' onClick={handleSubmit}></input> 
- 
-    </form>
-  </> 
-    )
+
+    </>
+  )
 }
