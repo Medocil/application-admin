@@ -8,6 +8,12 @@ import {
   Route
 } from "react-router-dom";
 import Connect from './components/Connect';
+import Users from './components/users/Users';
+import Pharmacies from './components/pharmacies/Pharmacies';
+import Clients from './components/clients/Clients';
+
+
+
 
 function App() {
   function logout(e) {
@@ -24,15 +30,20 @@ function App() {
     <Nav className="mr-auto">
       <Nav.Link href="/">Home</Nav.Link>
       <Nav.Link onClick={logout}>Logout</Nav.Link>
+      <Nav.Link href="/users" >Users</Nav.Link>
+      <Nav.Link href="/pharmacies" >Pharmacies</Nav.Link>
+      <Nav.Link href="/clients" >Clients</Nav.Link>
     </Nav>
   </Navbar>
-
 
  <Router>
           <Switch>
             <Route exact path="/" component={Connect} />
+            <Route  path="/users/" component={Users}/>
+            <Route  path="/pharmacies/" component={Pharmacies}/>
+            <Route  path="/clients/" component={Clients}/>
           </Switch>
-        </Router> 
+  </Router> 
 
 
     </div>
